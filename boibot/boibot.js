@@ -10,26 +10,16 @@ var express = require('express');
 
 var app = express();
 
-/*
-var logger =  function(req, res, next){
-  console.log('logging');
-  next();
-}
-
-app.use(logger);
-*/
+app.set('view engine', 'ejs');
+app.set('views', path.join(__dirname, 'views'));
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
 
 app.use(express.static(path.join(__dirname, 'public')))
 
-var person = {
-  name:'jim',
-  age: 23
-}
 app.get('/', function(req, res){
-  res.send(person);
+  res.render('index');
 })
 
 app.listen(3000, function(){
@@ -63,13 +53,19 @@ client.on('message', message => {
     return message.channel.send(reply);
   }
 
-  try {
-    command.execute(message, args);
+  if(command.name === 'calendar'){
+    command.execute(message, args, app);
   }
-  catch (error) {
-    console.error(error);
-    message.reply('there was an error trying to execute that command!');
+  else{
+    try {
+      command.execute(message, args);
+    }
+    catch (error) {
+      console.error(error);
+      message.reply('there was an error trying to execute that command!');
+    }
   }
+  
 });
 
 
