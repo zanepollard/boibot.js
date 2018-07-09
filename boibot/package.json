@@ -11,6 +11,7 @@
     "url": "git+https://github.com/zanepollard/boibot.js.git"
   },
   "dependencies": {
+    "discord.py": "*",
     "body-parser": "*",
     "ejs": "^2.6.1",
     "express": "*"

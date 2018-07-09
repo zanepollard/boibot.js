@@ -1,3 +1,7 @@
+const fs = require('fs');
+const readline = require('readline');
+const {google} = require('googleapis');
+
 module.exports = {
     usage: '<ARG>',
     args: true,
@@ -5,6 +9,14 @@ module.exports = {
     name: 'calendar',
     description: 'Creates and displays calendar events',
     execute(message, args, app) {
-        message.channel.send('This will return a link to create/list a calendar event');
+        var events = [
+            {
+                  
+            }
+        ]
+        app.get('/', function(req, res){
+            res.render('index');
+          })
+        message.channel.send('http://localhost:3000');
     },
 };
