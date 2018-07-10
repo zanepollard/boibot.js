@@ -11,9 +11,13 @@ module.exports = {
         if (!args[1]) {
             return message.reply('please enter a nickname for them!');
         }
+        var nName = "";
+        for(i = 1; args[i]!== undefined; i++){
+            nName = nName + args[i] + " ";
+        }
         const taggedUser = message.mentions.users.first();
-        message.channel.send(`Setting ${taggedUser.username} to ${args[1]}`);
-        message.guild.members.get(taggedUser.id).setNickname(args[1])
-        //message.member.setNickname(args[1])
+        message.channel.send(`Setting ${taggedUser.username} to \"${nName}\"`);
+        message.guild.members.get(taggedUser.id).setNickname(nName);
+        console.log(`${taggedUser.username} set to \"${nName}\"`);
     },
 };
