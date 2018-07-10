@@ -3,12 +3,13 @@ const readline = require('readline');
 const {google} = require('googleapis');
 
 module.exports = {
-    usage: '<ARG>',
-    args: true,
+    usage: '<!calendar> <args>',
+    args: false,
     aliases: ['c', 'cal'],
     name: 'calendar',
     description: 'Creates and displays calendar events',
     execute(message, args, app) {
+        //temporary
         var events = [
             {
                   
