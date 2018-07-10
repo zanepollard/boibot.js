@@ -10,15 +10,6 @@ var express = require('express');
 
 var app = express();
 
-/*
-var logger =  function(req, res, next){
-  console.log('logging');
-  next();
-}
-
-app.use(logger);
-*/
-
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
 
