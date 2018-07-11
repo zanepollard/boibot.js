@@ -35,11 +35,20 @@ class BoiBot {
 
       const messageContentArray = {...message}.content.split(' ');
       const [ command, ...args] = messageContentArray;
+      
+      if (!args) {
+        let reply = `You didn't provide any arguments, ${message.author}!`;
+        message.channel.send(reply);
+      }
 
       switch(command) {
         case "n":
         case "nickname": 
           changeName(message, args);
+          break;
+        default:
+          let reply = `I'm a huge dipshit and can't understand that command, ${message.author} :'(\n`
+          message.channel.send(reply);
           break;
       }
     });
