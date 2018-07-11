@@ -4,25 +4,8 @@ const client = new Discord.Client();
 client.commands = new Discord.Collection();
 const { prefix, token } = require('./config.json');
 const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
-var bodyParser = require('body-parser');
+
 var path = require('path');
-var express = require('express');
-
-var app = express();
-
-app.set('view engine', 'ejs');
-app.set('views', path.join(__dirname, 'views'));
-
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({extended: false}));
-
-app.use(express.static(path.join(__dirname, 'public')))
-
-
-
-app.listen(3000, function(){
-  console.log('Server started on port 3000...');
-})
 
 for (const file of commandFiles) {
   const command = require(`./commands/${file}`);
@@ -32,6 +15,7 @@ for (const file of commandFiles) {
 client.on('ready', () => {
   console.log('I am ready!');
 });
+
 
 client.on('message', message => {
   if (!message.content.startsWith(prefix) || message.author.bot) return;
@@ -50,11 +34,6 @@ client.on('message', message => {
     }
     return message.channel.send(reply);
   }
-
-  if(command.name === 'calendar'){
-    command.execute(message, args, app);
-  }
-  else{
     try {
       command.execute(message, args);
     }
@@ -62,7 +41,6 @@ client.on('message', message => {
       console.error(error);
       message.reply('there was an error trying to execute that command!');
     }
-  }
   
 });
 
