@@ -6,35 +6,6 @@ const { prefix, token } = require('./config.json');
 const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
 var bodyParser = require('body-parser');
 var path = require('path');
-var express = require('express');
-
-var app = express();
-
-/*
-var logger =  function(req, res, next){
-  console.log('logging');
-  next();
-}
-
-app.use(logger);
-*/
-
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({extended: false}));
-
-app.use(express.static(path.join(__dirname, 'public')))
-
-var person = {
-  name:'jim',
-  age: 23
-}
-app.get('/', function(req, res){
-  res.send(person);
-})
-
-app.listen(3000, function(){
-  console.log('Server started on port 3000...');
-})
 
 for (const file of commandFiles) {
   const command = require(`./commands/${file}`);
