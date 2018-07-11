@@ -1,9 +1,23 @@
 Boibot.js
 ======
-Requires Node.js, Discord.js, body-parser, ejs, and express
+dem bois tell a computer what to do
+
+## Install
+Do the npm dance :dancer:
+```sh
+npm i
 ```
-npm install discord.js
-npm install body-parser
-npm install ejs
-npm install express
+## Spin up the Bot
+```sh
+npm start
+```
+
+## Testing
+Run the mocha test suite:
+```sh
+npm run test
+```
+Or continuously run mocha. It'll re run the tests as you update the project's code. Super handy for TDD.
+```sh
+npm run test:watch
 ```
