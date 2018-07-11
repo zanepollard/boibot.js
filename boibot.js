@@ -1,76 +1,49 @@
-const Discord = require('discord.js');
-const fs = require('fs');
-const client = new Discord.Client();
-client.commands = new Discord.Collection();
-const { prefix, token } = require('./config.json');
-const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
-var bodyParser = require('body-parser');
 var path = require('path');
-var express = require('express');
+const Discord = require('discord.js');
+const { prefix, token } = require('./config.json');
 
-var app = express();
+const getHelp = require('./commands/getHelp');
+const changeName = require('./commands/changeName');
 
-/*
-var logger =  function(req, res, next){
-  console.log('logging');
-  next();
-}
+class BoiBot {
+  constructor() {
+    this.token = token;
+    this.ready = false;
+    this.client = new Discord.Client();
 
-app.use(logger);
-*/
+    this.client
+          .on('ready', this.onReady())
+          .on('message', this.onMessage());
 
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({extended: false}));
-
-app.use(express.static(path.join(__dirname, 'public')))
-
-var person = {
-  name:'jim',
-  age: 23
-}
-app.get('/', function(req, res){
-  res.send(person);
-})
-
-app.listen(3000, function(){
-  console.log('Server started on port 3000...');
-})
-
-for (const file of commandFiles) {
-  const command = require(`./commands/${file}`);
-  client.commands.set(command.name, command);
-}
-
-client.on('ready', () => {
-  console.log('I am ready!');
-});
-
-client.on('message', message => {
-  if (!message.content.startsWith(prefix) || message.author.bot) return;
-
-  const args = message.content.slice(prefix.length).split(/ +/);
-  const commandName = args.shift().toLowerCase();
-
-  const command = client.commands.get(commandName)
-    || client.commands.find(cmd => cmd.aliases && cmd.aliases.includes(commandName));
-    
-  if (!command) return;
-  if (command.args && !args.length) {
-    let reply = `You didn't provide any arguments, ${message.author}!`
-    if (command.usage) {
-      reply += `\nThe proper usage would be: \`${prefix}${command.name} ${command.usage}\``;
-    }
-    return message.channel.send(reply);
+    this.client.login(this.token);
   }
 
-  try {
-    command.execute(message, args);
+  destructor() {
+    return this.client.destroy();
   }
-  catch (error) {
-    console.error(error);
-    message.reply('there was an error trying to execute that command!');
+
+  onReady() {
+    return ( _ => {
+      console.log('this is boi bot. I am ready to submit!');
+      this.ready = true;
+    })
   }
-});
 
+  onMessage() {
+    return ( message => {
+      if (!message.content.startsWith(prefix) || message.author.bot) return;
 
-client.login(token);
+      const messageContentArray = {...message}.content.split(' ');
+      const [ command, ...args] = messageContentArray;
+
+      switch(command) {
+        case "n":
+        case "nickname": 
+          changeName(message, args);
+          break;
+      }
+    });
+  }
+}
+
+module.exports = BoiBot;
