@@ -25,9 +25,9 @@ describe("BoiBot", function() {
         });
 
         it("extracts the command from the message content", function () {
-            dummyMessage.content = "!name someUser New Nickname";
+            dummyMessage.content = "!n someUser New Nickname";
             boiBot.onMessage(dummyMessage);
-            assert.equal(boiBot.userCommand, "name");
+            assert.equal(boiBot.userCommand, "n");
         });
 
         it("consumes user's arguments as array", function () {

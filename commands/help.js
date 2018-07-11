@@ -9,8 +9,9 @@ const helpProperties = {
 
 const get = (message, commands, args) => {
     const data = [];
-    
-    const command = commands.find(command => command.name === args.join(''));
+    console.log(args[0])
+    const command = commands.find(command => command.aliases.find( alias => alias === args[0]));
+    console.log("command: ", command)
     
     if (!args.length || command === undefined) {
         data.push('Here\'s a list of all my commands:');
@@ -34,7 +35,7 @@ const get = (message, commands, args) => {
     if (command.description) data.push(`**Description:** ${command.description}`);
     if (command.usage) data.push(`**Usage:** ${prefix}${command.name} ${command.usage}`);
 
-    message.channel.send(data, { split: true });
+    return message.channel.send(data, { split: true });
 }
 
 module.exports = {

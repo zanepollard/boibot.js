@@ -17,31 +17,6 @@ class BoiBot {
     return this.client.destroy();
   }
 
-  get messageToUser () {
-    return this._messageToUser;
-  }
-
-  set messageToUser (messageToUser) {
-    this._messageToUser = messageToUser;
-    this.message.channel.send(messageToUser).catch(console.error);
-  }
-
-  get userCommand () {
-    return this._userCommand;
-  }
-
-  set userCommand (messageContent) {
-    this._userCommand = messageContent.split(' ')[0].slice(prefix.length);
-  }
-
-  get userArguments () {
-    return this._currentArguments;
-  }
-
-  set userArguments (messageContent) {
-    [, ... this._currentArguments] = messageContent.split(' ')
-  }
-
   addEventHandlers() {
     this.client
           .on('ready', this.onReady)
@@ -57,22 +32,22 @@ class BoiBot {
   }
 
   onMessage( message ) {
-    this.message = message;
-    if (!this.message.content.startsWith(prefix) || this.message.author.bot) return null;
+    if (!message.content.startsWith(prefix) || message.author.bot) return null;
     
-    this.userCommand = this.message.content;
-    this.userArguments = this.message.content;
-
+    this.userCommand = message.content.split(' ')[0].slice(prefix.length);
+    [, ... this.userArguments] = message.content.split(' ')
+    
     switch(this.userCommand) {
       case "n":
       case "nickname":
-        nickName.change(this.message, this.userArguments);
+        nickName.change(message, this.userArguments);
         break;
       default:
         if(this.userCommand !== 'help') {
           this.messageToUser = `I'm a huge dipshit and can't understand that command :'(\n`;
+          message.channel.send(this.messageToUser).catch(console.error);
         }
-        help.get(this.message, [help.properties, nickName.properties], this.userArguments);
+        help.get(message, [help.properties, nickName.properties], this.userArguments);
         break;
     }
   }
