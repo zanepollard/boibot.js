@@ -3,60 +3,78 @@ const Discord = require('discord.js');
 const { prefix, token } = require('./config.json');
 
 const help = require('./commands/help');
-const nickName = require('./commands/nickName');
+const nickName = require('./commands/nick-name');
 
 class BoiBot {
   constructor() {
+    this.client = new Discord.Client();
     this.token = token;
     this.ready = false;
-    this.client = new Discord.Client();
-
-    this.client
-          .on('ready', this.onReady())
-          .on('message', this.onMessage());
-
-    this.client.login(this.token);
+    this.addEventHandlers();
   }
 
   destructor() {
     return this.client.destroy();
   }
 
-  onReady() {
-    return ( _ => {
-      console.log('this is boi bot. I am ready to submit!');
-      this.ready = true;
-    })
+  get messageToUser () {
+    return this._messageToUser;
   }
 
-  onMessage() {
-    return ( message => {
-      if (!message.content.startsWith(prefix) || message.author.bot) return;
+  set messageToUser (messageToUser) {
+    this._messageToUser = messageToUser;
+    this.message.channel.send(messageToUser).catch(console.error);
+  }
 
-      const messageContentArray = {...message}.content.split(' ');
-      let [ command, ...args] = messageContentArray;
-      command = command.slice(prefix.length);
-      
-      if (!args) {
-        let reply = `You didn't provide any arguments, ${message.author}!`;
-        message.channel.send(reply);
-      }
+  get userCommand () {
+    return this._userCommand;
+  }
 
-      switch(command) {
-        case "n":
-        case "nickname":
-          nickName.change(message, args);
-          break;
-        case "help":
-          help.get(message, [help.properties, nickName.properties], args);
-          break;
-        default:
-          let reply = `I'm a huge dipshit and can't understand that command, ${message.author} :'(\n`
-          message.channel.send(reply);
-          help.get(message, [help.properties, nickName.properties], args);
-          break;
-      }
-    });
+  set userCommand (messageContent) {
+    this._userCommand = messageContent.split(' ')[0].slice(prefix.length);
+  }
+
+  get userArguments () {
+    return this._currentArguments;
+  }
+
+  set userArguments (messageContent) {
+    [, ... this._currentArguments] = messageContent.split(' ')
+  }
+
+  addEventHandlers() {
+    this.client
+          .on('ready', this.onReady)
+          .on('message', this.onMessage);
+  }
+
+  logIn() {
+    this.client.login(this.token);
+  }
+
+  onReady() {
+    this.ready = true;
+  }
+
+  onMessage( message ) {
+    this.message = message;
+    if (!this.message.content.startsWith(prefix) || this.message.author.bot) return null;
+    
+    this.userCommand = this.message.content;
+    this.userArguments = this.message.content;
+
+    switch(this.userCommand) {
+      case "n":
+      case "nickname":
+        nickName.change(this.message, this.userArguments);
+        break;
+      default:
+        if(this.userCommand !== 'help') {
+          this.messageToUser = `I'm a huge dipshit and can't understand that command :'(\n`;
+        }
+        help.get(this.message, [help.properties, nickName.properties], this.userArguments);
+        break;
+    }
   }
 }
 module.exports = BoiBot;

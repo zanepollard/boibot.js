@@ -20,7 +20,6 @@ const change = (message, args) => {
     const taggedUser = message.mentions.users.first();
     message.channel.send(`Setting ${taggedUser.username} to \"${newNickname}\"`);
     message.guild.members.get(taggedUser.id).setNickname(newNickname);
-    console.log(`${taggedUser.username} set to \"${newNickname}\"`);
     return newNickname;
 }
 

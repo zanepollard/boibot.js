@@ -5,7 +5,8 @@
   "main": "boibot.js",
   "scripts": {
     "start": "node ./launch-the-boy.js",
-    "test": "mocha \"./**/*.spec.js\""
+    "test": "mocha ./tests/*.js",
+    "test:watch": "mocha --watch ./tests/*.js"
   },
   "repository": {
     "type": "git",
