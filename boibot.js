@@ -49,6 +49,7 @@ class BoiBot {
         default:
           let reply = `I'm a huge dipshit and can't understand that command, ${message.author} :'(\n`
           message.channel.send(reply);
+          getHelp(message, command, args);
           break;
       }
     });
