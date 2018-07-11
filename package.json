@@ -4,8 +4,9 @@
   "description": "bot for my discord server",
   "main": "boibot.js",
   "scripts": {
-    "start": "node ./boibot.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node ./launch-the-boy.js",
+    "test": "mocha ./tests/*.js",
+    "test:watch": "mocha --watch ./tests/*.js"
   },
   "repository": {
     "type": "git",
@@ -22,5 +23,8 @@
   "bugs": {
     "url": "https://github.com/zanepollard/boibot.js/issues"
   },
-  "homepage": "https://github.com/zanepollard/boibot.js#readme"
+  "homepage": "https://github.com/zanepollard/boibot.js#readme",
+  "devDependencies": {
+    "mocha": "^5.2.0"
+  }
 }

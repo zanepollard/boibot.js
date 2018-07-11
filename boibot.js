@@ -1,47 +1,55 @@
-const Discord = require('discord.js');
-const fs = require('fs');
-const client = new Discord.Client();
-client.commands = new Discord.Collection();
-const { prefix, token } = require('./config.json');
-const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
-var bodyParser = require('body-parser');
 var path = require('path');
+const Discord = require('discord.js');
+const { prefix, token } = require('./config.json');
 
-for (const file of commandFiles) {
-  const command = require(`./commands/${file}`);
-  client.commands.set(command.name, command);
-}
+const help = require('./commands/help');
+const nickName = require('./commands/nick-name');
 
-client.on('ready', () => {
-  console.log('I am ready!');
-});
+class BoiBot {
+  constructor() {
+    this.client = new Discord.Client();
+    this.token = token;
+    this.ready = false;
+    this.addEventHandlers();
+  }
 
-client.on('message', message => {
-  if (!message.content.startsWith(prefix) || message.author.bot) return;
+  destructor() {
+    return this.client.destroy();
+  }
 
-  const args = message.content.slice(prefix.length).split(/ +/);
-  const commandName = args.shift().toLowerCase();
+  addEventHandlers() {
+    this.client
+          .on('ready', this.onReady)
+          .on('message', this.onMessage);
+  }
 
-  const command = client.commands.get(commandName)
-    || client.commands.find(cmd => cmd.aliases && cmd.aliases.includes(commandName));
+  logIn() {
+    this.client.login(this.token);
+  }
+
+  onReady() {
+    this.ready = true;
+  }
+
+  onMessage( message ) {
+    if (!message.content.startsWith(prefix) || message.author.bot) return null;
     
-  if (!command) return;
-  if (command.args && !args.length) {
-    let reply = `You didn't provide any arguments, ${message.author}!`
-    if (command.usage) {
-      reply += `\nThe proper usage would be: \`${prefix}${command.name} ${command.usage}\``;
+    this.userCommand = message.content.split(' ')[0].slice(prefix.length);
+    [, ... this.userArguments] = message.content.split(' ')
+    
+    switch(this.userCommand) {
+      case "n":
+      case "nickname":
+        nickName.change(message, this.userArguments);
+        break;
+      default:
+        if(this.userCommand !== 'help') {
+          this.messageToUser = `I'm a huge dipshit and can't understand that command :'(\n`;
+          message.channel.send(this.messageToUser).catch(console.error);
+        }
+        help.get(message, [help.properties, nickName.properties], this.userArguments);
+        break;
     }
-    return message.channel.send(reply);
   }
-
-  try {
-    command.execute(message, args);
-  }
-  catch (error) {
-    console.error(error);
-    message.reply('there was an error trying to execute that command!');
-  }
-});
-
-
-client.login(token);
+}
+module.exports = BoiBot;
