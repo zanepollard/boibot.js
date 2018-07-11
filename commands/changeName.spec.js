@@ -18,11 +18,12 @@ const testMessage = {
     }
 }
 
-const testNickname = "Testing 3234$$@#$"
+const testNickname = "Testing 3234$$@#$";
+const testCommand = ["@someUserName", "Testing", "3234$$@#$"];
 
 describe("Change User's Name", function() {
     it("Sets the username correctly", function (done) {
-        changeName(testMessage, testNickname)
+        assert.equal(changeName(testMessage, testCommand), testNickname);
         done();
     });
 });

@@ -1,4 +1,7 @@
 const changeName = (message, args) => {
+    [, ...newNickname] = args;
+    newNickname = newNickname.join(' ');
+
     if (!message.mentions.users.size){
         return message.reply('please tag a user in order to name them!');
     }
@@ -7,10 +10,10 @@ const changeName = (message, args) => {
     }
     
     const taggedUser = message.mentions.users.first();
-    message.channel.send(`Setting ${taggedUser.username} to \"${args}\"`);
-    message.guild.members.get(taggedUser.id).setNickname(args);
-    console.log(`${taggedUser.username} set to \"${args}\"`);
-    return args;
+    message.channel.send(`Setting ${taggedUser.username} to \"${newNickname}\"`);
+    message.guild.members.get(taggedUser.id).setNickname(newNickname);
+    console.log(`${taggedUser.username} set to \"${newNickname}\"`);
+    return newNickname;
 }
 
 

@@ -34,7 +34,8 @@ class BoiBot {
       if (!message.content.startsWith(prefix) || message.author.bot) return;
 
       const messageContentArray = {...message}.content.split(' ');
-      const [ command, ...args] = messageContentArray;
+      let [ command, ...args] = messageContentArray;
+      command = command.slice(prefix.length);
       
       if (!args) {
         let reply = `You didn't provide any arguments, ${message.author}!`;
@@ -43,7 +44,7 @@ class BoiBot {
 
       switch(command) {
         case "n":
-        case "nickname": 
+        case "nickname":
           changeName(message, args);
           break;
         default:
@@ -55,5 +56,4 @@ class BoiBot {
     });
   }
 }
-
 module.exports = BoiBot;
