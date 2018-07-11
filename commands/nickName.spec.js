@@ -1,5 +1,5 @@
 var assert = require('assert');
-const changeName = require('./changeName');
+const nickName = require('./nickName');
 
 const testMessage = {
     channel: {
@@ -23,7 +23,7 @@ const testCommand = ["@someUserName", "Testing", "3234$$@#$"];
 
 describe("Change User's Name", function() {
     it("Sets the username correctly", function (done) {
-        assert.equal(changeName(testMessage, testCommand), testNickname);
+        assert.equal(nickName.change(testMessage, testCommand), testNickname);
         done();
     });
 });

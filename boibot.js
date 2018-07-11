@@ -2,8 +2,8 @@ var path = require('path');
 const Discord = require('discord.js');
 const { prefix, token } = require('./config.json');
 
-const getHelp = require('./commands/getHelp');
-const changeName = require('./commands/changeName');
+const help = require('./commands/help');
+const nickName = require('./commands/nickName');
 
 class BoiBot {
   constructor() {
@@ -45,12 +45,15 @@ class BoiBot {
       switch(command) {
         case "n":
         case "nickname":
-          changeName(message, args);
+          nickName.change(message, args);
+          break;
+        case "help":
+          help.get(message, [help.properties, nickName.properties], args);
           break;
         default:
           let reply = `I'm a huge dipshit and can't understand that command, ${message.author} :'(\n`
           message.channel.send(reply);
-          getHelp(message, command, args);
+          help.get(message, [help.properties, nickName.properties], args);
           break;
       }
     });

@@ -1,4 +1,12 @@
-const changeName = (message, args) => {
+const nickNameProperties = {
+    usage: '<Tag> <nickname>',
+    args: true,
+    aliases: ['n', 'nickname'],
+    name: 'name',
+    description: 'Changes tagged user\'s nickname',
+};
+
+const change = (message, args) => {
     [, ...newNickname] = args;
     newNickname = newNickname.join(' ');
 
@@ -17,4 +25,7 @@ const changeName = (message, args) => {
 }
 
 
-module.exports = changeName;
+module.exports = {
+    properties: nickNameProperties,
+    change: change
+};
