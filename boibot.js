@@ -10,6 +10,10 @@ class BoiBot {
     this.client = new Discord.Client();
     this.token = token;
     this.ready = false;
+
+    this.onReady = this.onReady.bind(this);
+    this.onMessage = this.onMessage.bind(this);
+
     this.addEventHandlers();
   }
 
