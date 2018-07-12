@@ -29,11 +29,19 @@ class BoiBot {
     this.ready = true;
   }
 
+  setUserCommand(messageContent) {
+    this.userCommand = messageContent.split(" ")[0].slice(prefix.length);
+  }
+
+  setUserArguments(messageContent) {
+    [, ...this.userArguments] = messageContent.split(" ");
+  }
+
   onMessage(message) {
     if (!message.content.startsWith(prefix) || message.author.bot) return null;
 
-    this.userCommand = message.content.split(" ")[0].slice(prefix.length);
-    [, ...this.userArguments] = message.content.split(" ");
+    this.setUserCommand(message.content);
+    this.setUserArguments(message.content);
 
     switch (this.userCommand) {
       case "n":

@@ -23,13 +23,13 @@ describe("BoiBot", function() {
 
     it("extracts the command from the message content", function() {
       dummyMessage.content = "!n someUser New Nickname";
-      boiBot.onMessage(dummyMessage);
+      boiBot.setUserCommand(dummyMessage.content);
       assert.equal(boiBot.userCommand, "n");
     });
 
     it("consumes user's arguments as array", function() {
       dummyMessage.content = "!name someUser New Nickname";
-      boiBot.onMessage(dummyMessage);
+      boiBot.setUserArguments(dummyMessage.content);
       assert.deepEqual(boiBot.userArguments, ["someUser", "New", "Nickname"]);
     });
 
