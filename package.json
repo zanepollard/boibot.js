@@ -7,7 +7,7 @@
     "start": "node ./launch-the-boy.js",
     "test": "mocha ./tests/*.js",
     "test:watch": "mocha --watch ./tests/*.js",
-    "prettier": "prettier --write --print-width 65 \"**/*.js\""
+    "prettier": "prettier --write \"**/*.js\""
   },
   "repository": {
     "type": "git",

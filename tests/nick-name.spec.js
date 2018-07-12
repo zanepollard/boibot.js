@@ -7,10 +7,7 @@ const testCommand = ["@someUserName", "Testing", "3234$$@#$"];
 
 describe("Change User's Name", function() {
   it("Sets the username correctly", function(done) {
-    assert.equal(
-      nickName.change(dummyMessage, testCommand),
-      testNickname
-    );
+    assert.equal(nickName.change(dummyMessage, testCommand), testNickname);
     done();
   });
 });

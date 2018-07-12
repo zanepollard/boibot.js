@@ -30,11 +30,7 @@ describe("BoiBot", function() {
     it("consumes user's arguments as array", function() {
       dummyMessage.content = "!name someUser New Nickname";
       boiBot.onMessage(dummyMessage);
-      assert.deepEqual(boiBot.userArguments, [
-        "someUser",
-        "New",
-        "Nickname"
-      ]);
+      assert.deepEqual(boiBot.userArguments, ["someUser", "New", "Nickname"]);
     });
 
     it("sends the user a message when it doesn't understand a command", function() {

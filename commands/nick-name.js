@@ -11,21 +11,15 @@ const change = (message, args) => {
   newNickname = newNickname.join(" ");
 
   if (!message.mentions.users.size) {
-    return message.reply(
-      "please tag a user in order to name them!"
-    );
+    return message.reply("please tag a user in order to name them!");
   }
   if (!args) {
     return message.reply("please enter a nickname for them!");
   }
 
   const taggedUser = message.mentions.users.first();
-  message.channel.send(
-    `Setting ${taggedUser.username} to \"${newNickname}\"`
-  );
-  message.guild.members
-    .get(taggedUser.id)
-    .setNickname(newNickname);
+  message.channel.send(`Setting ${taggedUser.username} to \"${newNickname}\"`);
+  message.guild.members.get(taggedUser.id).setNickname(newNickname);
   return newNickname;
 };
 
