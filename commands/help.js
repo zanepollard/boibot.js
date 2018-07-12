@@ -2,7 +2,8 @@ const { prefix } = require("../config.json");
 
 const helpProperties = {
   name: "help",
-  description: "List all of my commands or info about a specific command.",
+  description:
+    "List all of my commands or info about a specific command.",
   aliases: ["commands"],
   usage: "[command name]"
 };
@@ -24,7 +25,9 @@ const get = (message, commands, args) => {
       .send(data, { split: true })
       .then(() => {
         if (message.channel.type === "dm") return;
-        message.reply("I've sent you a DM with all my commands!");
+        message.reply(
+          "I've sent you a DM with all my commands!"
+        );
       })
       .catch(error => {
         console.error(
@@ -40,12 +43,18 @@ const get = (message, commands, args) => {
 
   data.push(`**Name:** ${command.name}`);
 
-  if (command.aliases) data.push(`**Aliases:** ${command.aliases.join(", ")}`);
-  if (command.description) data.push(`**Description:** ${command.description}`);
+  if (command.aliases)
+    data.push(`**Aliases:** ${command.aliases.join(", ")}`);
+  if (command.description)
+    data.push(`**Description:** ${command.description}`);
   if (command.usage)
-    data.push(`**Usage:** ${prefix}${command.name} ${command.usage}`);
+    data.push(
+      `**Usage:** ${prefix}${command.name} ${command.usage}`
+    );
 
-  message.channel.send(data, { split: true });
+  message.channel.send(data, {
+    split: true
+  });
   return command;
 };
 

@@ -18,7 +18,9 @@ class BoiBot {
   }
 
   addEventHandlers() {
-    this.client.on("ready", this.onReady).on("message", this.onMessage);
+    this.client
+      .on("ready", this.onReady)
+      .on("message", this.onMessage);
   }
 
   logIn() {
@@ -30,9 +32,15 @@ class BoiBot {
   }
 
   onMessage(message) {
-    if (!message.content.startsWith(prefix) || message.author.bot) return null;
+    if (
+      !message.content.startsWith(prefix) ||
+      message.author.bot
+    )
+      return null;
 
-    this.userCommand = message.content.split(" ")[0].slice(prefix.length);
+    this.userCommand = message.content
+      .split(" ")[0]
+      .slice(prefix.length);
     [, ...this.userArguments] = message.content.split(" ");
 
     switch (this.userCommand) {
@@ -43,7 +51,9 @@ class BoiBot {
       default:
         if (this.userCommand !== "help") {
           this.messageToUser = `I'm a huge dipshit and can't understand that command :'(\n`;
-          message.channel.send(this.messageToUser).catch(console.error);
+          message.channel
+            .send(this.messageToUser)
+            .catch(console.error);
         }
         help.get(
           message,
