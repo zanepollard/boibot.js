@@ -1,4 +1,3 @@
-var path = require("path");
 const Discord = require("discord.js");
 const { prefix, token } = require("./config.json");
 
@@ -7,9 +6,9 @@ const nickName = require("./commands/nick-name");
 
 class BoiBot {
   constructor() {
-    this.client = new Discord.Client();
     this.token = token;
     this.ready = false;
+    this.client = new Discord.Client();
 
     this.onReady = this.onReady.bind(this);
     this.onMessage = this.onMessage.bind(this);
@@ -21,6 +20,9 @@ class BoiBot {
     return this.client.destroy();
   }
 
+  /**
+   * Assigns event handlers to Discord Client events
+   */
   addEventHandlers() {
     this.client.on("ready", this.onReady).on("message", this.onMessage);
   }
@@ -33,14 +35,32 @@ class BoiBot {
     this.ready = true;
   }
 
+  /**
+   * Extracts the command from the user's message
+   * and assigns it to the object's this.userCommand property.
+   *
+   * @param {String} messageContent content of the user's message
+   */
   setUserCommand(messageContent) {
     this.userCommand = messageContent.split(" ")[0].slice(prefix.length);
   }
 
+  /**
+   * Extracts the arguments after the user's command
+   * and assigns it to the object's this.userArguments property as an array.
+   *
+   * @param {String} messageContent content of the user's message
+   */
   setUserArguments(messageContent) {
     [, ...this.userArguments] = messageContent.split(" ");
   }
 
+  /**
+   * Handles incoming messages by extracting the message's command and arguments
+   * then calling the appropriate method on the arguments.
+   *
+   * @param {Object} message message object from the Discord.js library
+   */
   onMessage(message) {
     if (!message.content.startsWith(prefix) || message.author.bot) return null;
 
