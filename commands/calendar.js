@@ -35,7 +35,7 @@ const initServer = (message) => {
         message.channel.send("http://localhost:3000");
         app.post("/events", function(req, res){
             var test = req.body.test;
-            var test2 = req.body.test2;
+            var test2 = req.body.start;
             console.log(test, test2);
             server.close(); 
             server = null; 
@@ -51,6 +51,7 @@ const initServer = (message) => {
 }
 
 const add = (message) => {
+    console.log("in !c");
     initServer(message);
 }
 
