@@ -2,6 +2,16 @@
     <head>
         <link rel="stylesheet" href="index.css">
         <title>Event Page</title>
+        <meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+        <link rel="stylesheet" href="/resources/demos/style.css">
+        <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+        <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+        <script>
+        $( function() {
+            $( "#datepicker" ).datepicker();
+        } );
+        </script>
     </head>
     <body>
         <div id="header">
@@ -9,13 +19,13 @@
         </div>
         <div id="main">
             <form action="/events" method="POST">
+                <div>
+                    
+                </div>
                 <input type="text" placeholder="Test" name="test">
-                <input type="text" placeholder="Test" name="test2">
+                <input id = "datepicker" type="text" placeholder="Test" name="datepicker1">
                 <button type="submit">Submit</button>
             </form>
-        </div>
-        <div id="footer">
-            <p>This is the footer</p>
         </div>
     </body>
 </html>

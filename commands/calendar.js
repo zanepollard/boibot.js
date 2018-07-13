@@ -21,8 +21,8 @@ const initServer = (message) => {
     app.use(bodyParser.json());
     app.use(bodyParser.urlencoded({extended: true}));
     app.use(express.static(path.join(__dirname, '../public')))
-    app.use(express.json());
-    app.use(express.urlencoded());
+    //app.use(express.json());
+    //app.use(express.urlencoded());
 
     app.get("/", function(req, res){
         test = "this is a variable";
@@ -38,9 +38,9 @@ const initServer = (message) => {
             var test2 = req.body.test2;
             console.log(test, test2);
             server.close(); 
-            console.log("server closed"); 
-            server = null;
-        });
+            server = null; 
+            console.log("server closed");    
+        });    
         if(!server){
             setTimeout(function(){server.close(); console.log("server closed"); server = null;}, 30000);    
         }    
