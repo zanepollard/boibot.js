@@ -11,7 +11,7 @@
         <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
         <script>
         $( function() {
-            $( "#datepicker" ).datepicker();
+            $( ".datepicker" ).datepicker();
         } );
         </script>
         <script>
@@ -21,9 +21,9 @@
                     interval: 30,
                     minTime: '0',
                     maxTime: '11:59PM',
-                    defaultTime: '11',
+                    defaultTime: '12',
                     startTime: '0',
-                    dynamic: false,
+                    dynamic: true,
                     dropdown: true,
                     scrollbar: true
                 });  
@@ -37,11 +37,26 @@
         </div>
         <div id="main">
             <form action="/events" method="POST" autocomplete="off">
-                <div>
-
+                <div id="name">
+                    <input type="text" name="name">
                 </div>
-                <input class = "timepicker" type="text" name="test">
-                <input id = "datepicker" type="text" name="start">
+                <div id="place">
+                    <input type="text" name = "address">
+                </div>
+                <div id="startD">
+                    <input class = "datepicker" type="text" name="startD">
+                </div>
+                <div id="endD">
+                    <input class = "datepicker" type="text" name="endD">
+                </div>
+                <div id="startT">
+                    <input class = "timepicker" type="text" name="startT">
+                </div>
+                <div id="endT">
+                    <input class = "timepicker" type="text" name="endT">
+                </div>
+                
+                
                 <button type="submit">Submit</button>
             </form>
         </div>
