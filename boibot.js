@@ -3,6 +3,7 @@ const { prefix, token } = require("./config.json");
 
 const help = require("./commands/help");
 const nickName = require("./commands/nick-name");
+const calendar = require("./commands/calendar");
 
 class BoiBot {
   constructor() {
@@ -71,6 +72,10 @@ class BoiBot {
       case "n":
       case "nickname":
         nickName.change(message, this.userArguments);
+        break;
+      case "c":
+      case "cal":
+        calendar.add(message);
         break;
       default:
         if (this.userCommand !== "help") {
