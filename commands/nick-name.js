@@ -21,8 +21,10 @@ const change = (message, args) => {
     message.guild.members.get(taggedUser.id).setNickname(newNickname);
     return newNickname;
   } else {
-    message.reply(`${taggedUser.username}, you didn't add a nickname to your message.
-    Format your message like this: \`!n ${taggedUser.username} A New Nickname\``);
+    message.reply(
+      `${taggedUser.username}, you didn't add a nickname to your message.
+      Format your message like this: \`!n ${taggedUser.username} A New Nickname\``
+    );
     return taggedUser.username;
   }
 };

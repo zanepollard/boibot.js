@@ -10,8 +10,13 @@ describe("Change User's Name", function() {
     assert.equal(nickName.change(dummyMessage, testArguments), testNickname);
     done();
   });
-  it("cancels command when no arguments are passed", function () {
-    testArguments = [" "];
-    assert.equal(nickName.change(dummyMessage, testArguments), dummyMessage.mentions.users.first().username);
-  })
+  it("cancels command when no arguments or empty string is passed", function() {
+    testArguments = [[" "], [""], ["      "], []];
+    testArguments.map(arg =>
+      assert.equal(
+        nickName.change(dummyMessage, arg),
+        dummyMessage.mentions.users.first().username
+      )
+    );
+  });
 });
