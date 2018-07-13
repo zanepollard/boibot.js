@@ -1,38 +1,45 @@
-const fs = require('fs');
-const readline = require('readline');
+var mongoose = require("mongoose");
+var express = require("express");
+var bodyParser = require('body-parser');
+var path = require('path');
+var app = express();
+var server;
 
-/*
-module.exports = {
-    usage: '<ARG>',
-    args: true,
-    aliases: ['c', 'cal'],
-    name: 'calendar',
-    description: 'Creates and displays calendar events',
-    execute(message, args, app) {
-        var events = [
-            {
-                  
-            }
-        ]
-        app.get('/', function(req, res){
-            res.render('index');
-          })
-        message.channel.send('http://localhost:3000');
-    },
-};
-*/
+mongoose.connect('mongodb://localhost/test');
 
 const calendarProperties = {
     usage: "<Tag>",
     args: false,
     aliases: ["c", "cal"],
     name: "calendar",
-    description: "Initializes a web server in order to create a calendar event for the server"
+    description: "Initializes a web server in order to create a calendar event"
   };
 
-const add = (message) => {
-    message.channel.send("TODO");
+const initServer = (message) => {
+    app.set('view engine', 'ejs');
+    app.set('views', path.join(__dirname, '../views'));
+    app.use(bodyParser.json());
+    app.use(bodyParser.urlencoded({extended: true}));
+    app.use(express.static(path.join(__dirname, '../public')))
 
+    app.get("/", function(req, res){
+        test = "this is a variable";
+        req.test = test;
+        res.render("index");
+    });
+    
+    if(!server){
+        server = app.listen(3000, function(){console.log('Server started on port 3000...');});
+        setTimeout(function(){server.close(); console.log("server closed"); server = null;}, 10000);
+        message.channel.send("http://localhost:3000");
+    }
+    else{
+        return message.channel.send("Server already running!");
+    } 
+}
+
+const add = (message) => {
+    initServer(message);
 }
 
 module.exports = {
