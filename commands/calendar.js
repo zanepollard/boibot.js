@@ -34,9 +34,13 @@ const initServer = (message) => {
         server = app.listen(3000, function(){console.log('Server started on port 3000...');});
         message.channel.send("http://localhost:3000");
         app.post("/events", function(req, res){
-            var test = req.body.test;
-            var test2 = req.body.start;
-            console.log(test, test2);
+            var name = req.body.name;
+            var address = req.body.address;
+            var startD = req.body.startD;
+            var endD = req.body.endD;
+            var startT = req.body.startT;
+            var endT = req.body.endT;
+            console.log(name,"\n",address,"\n",startD,"\n",endD,"\n",startT,"\n",endT);
             server.close(); 
             server = null; 
             console.log("server closed");    

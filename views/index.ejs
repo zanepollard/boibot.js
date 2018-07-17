@@ -3,15 +3,16 @@
         <link rel="stylesheet" href="index.css">
         <title>Event Page</title>
         <meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+
         <link rel="stylesheet" href="/resources/demos/style.css">
         <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
         <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.css">
         <script src="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.js"></script>
         <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+        <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
         <script>
         $( function() {
-            $( ".datepicker" ).datepicker();
+            $( "#datepicker" ).datepicker();
         } );
         </script>
         <script>
@@ -37,27 +38,26 @@
         </div>
         <div id="main">
             <form action="/events" method="POST" autocomplete="off">
-                <div id="name">
-                    <input type="text" name="name">
-                </div>
-                <div id="place">
-                    <input type="text" name = "address">
-                </div>
-                <div id="startD">
-                    <input class = "datepicker" type="text" name="startD">
-                </div>
-                <div id="endD">
-                    <input class = "datepicker" type="text" name="endD">
-                </div>
-                <div id="startT">
-                    <input class = "timepicker" type="text" name="startT">
-                </div>
-                <div id="endT">
-                    <input class = "timepicker" type="text" name="endT">
-                </div>
-                
-                
-                <button type="submit">Submit</button>
+                <div id="inner">
+                    <div id="name">
+                        <input id="ename" type="text" name="name">
+                    </div>
+                    <div id="address">
+                        <input type="text" name = "address">
+                    </div>
+                    <div id="date">
+                        <input id="datepicker" class="date" type="text" name="startD">
+                    </div>
+                    <div id="startT">
+                        <input class = "timepicker" type="text" name="startT">
+                    </div>
+                    <div id="endT">
+                        <input class = "timepicker" type="text" name="endT">
+                    </div>
+                    <div id="submit">
+                        <button type="submit">Submit</button>
+                    </div>   
+                </div>   
             </form>
         </div>
     </body>
