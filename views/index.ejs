@@ -40,19 +40,24 @@
             <form action="/events" method="POST" autocomplete="off">
                 <div id="inner">
                     <div id="name">
+                        <label for="ename">Event Name:</label>
                         <input id="ename" type="text" name="name">
                     </div>
                     <div id="address">
-                        <input type="text" name = "address">
+                        <label for="aaddress">Address:</label>
+                        <input id = "aaddress" type="text" name = "address">
                     </div>
                     <div id="date">
+                        <label for="datepicker">Date:</label>
                         <input id="datepicker" class="date" type="text" name="startD">
                     </div>
                     <div id="startT">
-                        <input class = "timepicker" type="text" name="startT">
+                        <label for="tPicker">Time:</label>
+                        <input id = "tPicker"class = "timepicker" type="text" name="startT">
                     </div>
-                    <div id="endT">
-                        <input class = "timepicker" type="text" name="endT">
+                    <div id="duration">
+                        <label for="dur">Duration:</label>
+                        <input id = "dur"type="text" name="duration">
                     </div>
                     <div id="submit">
                         <button type="submit">Submit</button>

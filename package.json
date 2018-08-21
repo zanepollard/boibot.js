@@ -17,8 +17,7 @@
     "body-parser": "^1.18.3",
     "discord.js": "^11.3.2",
     "ejs": "^2.6.1",
-    "express": "*",
-    "mongoose": "^5.2.3"
+    "express": "*"
   },
   "author": "Zane Pollard",
   "license": "ISC",

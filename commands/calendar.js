@@ -1,11 +1,12 @@
-var mongoose = require("mongoose");
+
 var express = require("express");
 var bodyParser = require('body-parser');
 var path = require('path');
 var app = express();
+var fs = require("fs");
 var server;
 
-mongoose.connect('mongodb://localhost/test');
+
 
 const calendarProperties = {
     usage: "<Tag>",
@@ -21,9 +22,6 @@ const initServer = (message) => {
     app.use(bodyParser.json());
     app.use(bodyParser.urlencoded({extended: true}));
     app.use(express.static(path.join(__dirname, '../public')))
-    //app.use(express.json());
-    //app.use(express.urlencoded());
-
     app.get("/", function(req, res){
         test = "this is a variable";
         req.test = test;
@@ -37,13 +35,26 @@ const initServer = (message) => {
             var name = req.body.name;
             var address = req.body.address;
             var startD = req.body.startD;
-            var endD = req.body.endD;
             var startT = req.body.startT;
-            var endT = req.body.endT;
-            console.log(name,"\n",address,"\n",startD,"\n",endD,"\n",startT,"\n",endT);
+            var duration = req.body.duration;
+            console.log(name,"\n",address,"\n",startD,"\n",startT,"\n",duration);
             server.close(); 
             server = null; 
-            console.log("server closed");    
+            console.log("server closed");
+            fs.readFile('events.json', 'utf8', function readFileCallback(err, data){
+                if (err){
+                    console.log(err);
+                } 
+                else {
+                obj = JSON.parse(data);
+                obj.events.push({name: name, address: address, startDate: startD, startTime: startT, duration: duration});
+                
+                fs.writeFile('events.json', JSON.stringify(obj), (err) => {
+                    if (err) console.log(error(err))
+                }); 
+                  
+            }});
+            fs.close(0);    
         });    
         if(!server){
             setTimeout(function(){server.close(); console.log("server closed"); server = null;}, 30000);    

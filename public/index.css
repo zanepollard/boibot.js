@@ -11,20 +11,37 @@ body{
   ". main .";
 }
 #inner{
+  padding-top: 30px;
+  grid-row-gap: 30px;
   min-height:100%;
   display: grid;
-  grid-template-rows: repeat(3,1fr);
-  grid-template-columns: 1fr 1fr;
+  grid-template-rows: auto;
+  grid-template-columns: 1fr;
   grid-template-areas: 
-  "name address"
-  "date ."
-  "startT endT"
-  "submit .";
+  "name" 
+  "address"
+  "date" 
+  "startT"
+  "duration" 
+  "submit";
+}
+
+label {
+  float: left;
+  width: 180px;
+}
+
+input {
+  height:30px;
+  float: left;
+  width: calc(100% - 200px);
+  padding-right: 20px;
 }
 
 @media only screen and (max-width: 750px){
   body{
     min-height: 100%;
+    
     grid-template-areas:
     "header"
     "main";
@@ -32,6 +49,8 @@ body{
     grid-template-rows: 1fr 5fr;
   }
   #inner{
+    padding-top: 20px;
+    grid-row-gap: 20px;
     grid-template-rows: repeat(auto, 1fr);
     grid-template-columns: 1fr;
     grid-template-areas:
@@ -39,10 +58,12 @@ body{
     "address"
     "date"
     "startT"
-    "endT"
+    "duration"
     "submit";
   }
 }
+
+
 
 #header {
   background-color: #A3F7B5;
@@ -70,12 +91,10 @@ body{
   grid-area: startT;
 }
 
-#endT{
-  grid-area: endT;
+#duration{
+  grid-area: duration;
 }
 
 #submit{
   grid-area: submit;
-  grid-column-start: 1;
-  grid-column-end: 3;
 }
