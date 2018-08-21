@@ -5,7 +5,8 @@ var path = require('path');
 var app = express();
 var fs = require("fs");
 var server;
-
+var schedule = require('node-schedule-tz');
+var schedNot = [];
 
 
 const calendarProperties = {
@@ -52,7 +53,7 @@ const initServer = (message) => {
                 fs.writeFile('events.json', JSON.stringify(obj), (err) => {
                     if (err) console.log(error(err))
                 }); 
-                  
+                notify(startT,startD, name, message);  
             }});
             fs.close(0);    
         });    
@@ -65,8 +66,20 @@ const initServer = (message) => {
     } 
 }
 
+var notify = (time, day, name, message) => {
+    var date = new Date(Date.UTC(parseInt(day.substring(6,10)),parseInt(day.substring(0,2))-1,parseInt(day.substring(3,5)), parseInt(time.substring(0,2)), parseInt(time.substring(3,5)),0));
+    //TODO allow users to set their own notification times. for now 1.5 hours is good enough.
+    //date.setHours(date.getHours() - 1);
+    //date.setMinutes(date.getMinutes() -30);
+    date.setSeconds(date.getSeconds() -10);
+    var temp = schedule.scheduleJob(date, function(){
+        message.channel.send(`@everyone, The event: ${name} will begin in 1.5 hours`)
+    });
+    schedNot.push(temp);
+    
+}
+
 const add = (message) => {
-    console.log("in !c");
     initServer(message);
 }
 
