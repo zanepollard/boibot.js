@@ -47,7 +47,7 @@ const initServer = (message) => {
                 } 
                 else {
                 obj = JSON.parse(data);
-                obj.events.push({name: name, address: address, startDate: startD, startTime: startT, duration: duration});
+                obj.events.push({name: name, address: address, startDate: startD, startTime: startT, duration: duration, author: message.member.user.username, timestamp: message.createdAt});
                 
                 fs.writeFile('events.json', JSON.stringify(obj), (err) => {
                     if (err) console.log(error(err))
