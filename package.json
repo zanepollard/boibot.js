@@ -17,7 +17,8 @@
     "body-parser": "^1.18.3",
     "discord.js": "^11.3.2",
     "ejs": "^2.6.1",
-    "express": "*"
+    "express": "*",
+    "node-schedule-tz": "^1.2.1-4"
   },
   "author": "Zane Pollard",
   "license": "ISC",
