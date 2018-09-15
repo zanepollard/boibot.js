@@ -89,7 +89,7 @@ class BoiBot {
 
   onVoiceStateUpdate(oldMember, newMember) {
     if (newMember.voiceChannel) {
-      newMember.guild.channels.get('465981843444072458').send(`${newMember.nickname} joined a voice channel`)
+      newMember.guild.channels.get('417075362686828556').send(`${newMember.nickname} joined a voice channel`)
     }
   }
 }
