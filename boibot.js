@@ -12,6 +12,7 @@ class BoiBot {
 
     this.onReady = this.onReady.bind(this);
     this.onMessage = this.onMessage.bind(this);
+    this.onVoiceStateUpdate = this.onVoiceStateUpdate.bind(this);
 
     this.addEventHandlers();
   }
@@ -24,7 +25,7 @@ class BoiBot {
    * Assigns event handlers to Discord Client events
    */
   addEventHandlers() {
-    this.client.on("ready", this.onReady).on("message", this.onMessage);
+    this.client.on("ready", this.onReady).on("message", this.onMessage).on("voiceStateUpdate", this.onVoiceStateUpdate);
   }
 
   logIn() {
@@ -83,6 +84,12 @@ class BoiBot {
           this.userArguments
         );
         break;
+    }
+  }
+
+  onVoiceStateUpdate(oldMember, newMember) {
+    if (newMember.voiceChannel) {
+      newMember.guild.channels.get('417075362686828556').send(`${newMember.nickname} joined a voice channel`)
     }
   }
 }
