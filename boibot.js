@@ -94,10 +94,10 @@ class BoiBot {
     }
     else if (newMember.voiceChannel != oldMember.voiceChannel) {
       if(newMember.nickname == null){
-        newMember.guild.channels.get('466397237275131904').send(`${newMember.displayName} joined ${newMember.voiceChannel.name}`)
+        newMember.guild.channels.get('417075362686828556').send(`${newMember.displayName} joined ${newMember.voiceChannel.name}`)
       }
       else{
-        newMember.guild.channels.get('466397237275131904').send(`${newMember.nickname} joined ${newMember.voiceChannel.name}`)
+        newMember.guild.channels.get('417075362686828556').send(`${newMember.nickname} joined ${newMember.voiceChannel.name}`)
       }
     }
   }
