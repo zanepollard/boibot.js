@@ -88,8 +88,17 @@ class BoiBot {
   }
 
   onVoiceStateUpdate(oldMember, newMember) {
-    if (newMember.voiceChannel) {
-      newMember.guild.channels.get('417075362686828556').send(`${newMember.nickname} joined a voice channel`)
+    //417075362686828556
+    if(newMember.voiceChannel == null){
+      console.log("out")
+    }
+    else if (newMember.voiceChannel != oldMember.voiceChannel) {
+      if(newMember.nickname == null){
+        newMember.guild.channels.get('466397237275131904').send(`${newMember.displayName} joined ${newMember.voiceChannel.name}`)
+      }
+      else{
+        newMember.guild.channels.get('466397237275131904').send(`${newMember.nickname} joined ${newMember.voiceChannel.name}`)
+      }
     }
   }
 }
