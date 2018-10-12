@@ -25,7 +25,7 @@ class BoiBot {
    * Assigns event handlers to Discord Client events
    */
   addEventHandlers() {
-    this.client.on("ready", this.onReady).on("message", this.onMessage).on("voiceStateUpdate", this.onVoiceStateUpdate);
+    this.client.on("ready", this.onReady).on("message", this.onMessage).on("channelUpdate", this.onChannelUpdate);
   }
 
   logIn() {
@@ -67,17 +67,14 @@ class BoiBot {
 
     this.setUserCommand(message.content);
     this.setUserArguments(message.content);
-
+    console.log(this.userCommand)
     switch (this.userCommand) {
       case "n":
       case "nickname":
         nickName.change(message, this.userArguments);
         break;
-      default:
-        if (this.userCommand !== "help") {
-          this.messageToUser = `I'm a huge dipshit and can't understand that command :'(\n`;
-          message.channel.send(this.messageToUser).catch(console.error);
-        }
+      case "h":
+      case "help":
         help.get(
           message,
           [help.properties, nickName.properties],
@@ -99,6 +96,12 @@ class BoiBot {
       else{
         newMember.guild.channels.get('417075362686828556').send(`${newMember.nickname} joined ${newMember.voiceChannel.name}`)
       }
+    }
+  }
+
+  onChannelUpdate(oldMember,newMember){
+    if(oldMember.name != newMember.name){
+      newMember.send(`Channel **${oldMember.name}** changed to **${newMember.name}**.`)
     }
   }
 }
