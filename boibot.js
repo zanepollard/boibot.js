@@ -72,6 +72,7 @@ class BoiBot {
       case "n":
       case "nickname":
         nickName.change(message, this.userArguments);
+        message.delete()
         break;
       case "h":
       case "help":
