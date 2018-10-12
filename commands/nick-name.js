@@ -17,7 +17,13 @@ const change = (message, args) => {
   const taggedUser = message.mentions.users.first();
 
   if (newNickname.length > 0) {
-    message.channel.send(`Setting ${taggedUser.username}'s nickname to \"${newNickname}\"`);
+    if((message.guild.members.get(message.author.id).nickname) != null){
+      message.channel.send(`${message.guild.members.get(message.author.id).nickname} set ${taggedUser.username}'s nickname to \"${newNickname}\"`);
+    }
+    else{
+      message.channel.send(`${message.guild.members.get(message.author.id).displayName} set ${taggedUser.username}'s nickname to \"${newNickname}\"`);
+    }
+    
     message.guild.members.get(taggedUser.id).setNickname(newNickname);
     return newNickname;
   } else {
