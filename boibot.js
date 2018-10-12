@@ -9,12 +9,11 @@ class BoiBot {
     this.token = token;
     this.ready = false;
     this.client = new Discord.Client();
-
     this.onReady = this.onReady.bind(this);
     this.onMessage = this.onMessage.bind(this);
     this.onVoiceStateUpdate = this.onVoiceStateUpdate.bind(this);
-
     this.addEventHandlers();
+    
   }
 
   destructor() {
@@ -34,6 +33,9 @@ class BoiBot {
 
   onReady() {
     this.ready = true;
+    this.client.user.setActivity('!h for help!', {type: 'WATCHING'})
+      .then(presence => console.log(`Activity set to ${presence.game ? presence.game.name : 'none'}`))
+      .catch(console.error);
   }
 
   /**
