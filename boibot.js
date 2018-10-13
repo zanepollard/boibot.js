@@ -25,7 +25,7 @@ class BoiBot {
    * Assigns event handlers to Discord Client events
    */
   addEventHandlers() {
-    this.client.on("ready", this.onReady).on("message", this.onMessage).on("channelUpdate", this.onChannelUpdate);
+    this.client.on("ready", this.onReady).on("message", this.onMessage).on("channelUpdate", this.onChannelUpdate).on("voiceStateUpdate", this.onVoiceStateUpdate);
   }
 
   logIn() {
@@ -86,6 +86,7 @@ class BoiBot {
   }
 
   onVoiceStateUpdate(oldMember, newMember) {
+    //417075362686828556
     //417075362686828556
     if(newMember.voiceChannel == null){
       console.log("out")
