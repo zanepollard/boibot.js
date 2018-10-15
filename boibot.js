@@ -3,16 +3,17 @@ const { prefix, token } = require("./config.json");
 
 const help = require("./commands/help");
 const nickName = require("./commands/nick-name");
+const say = require("./commands/say")
+const eightball = require("./commands/eightball")
 
 class BoiBot {
   constructor() {
     this.token = token;
     this.ready = false;
     this.client = new Discord.Client();
-
     this.onReady = this.onReady.bind(this);
     this.onMessage = this.onMessage.bind(this);
-
+    this.onVoiceStateUpdate = this.onVoiceStateUpdate.bind(this);
     this.addEventHandlers();
   }
 
@@ -24,7 +25,7 @@ class BoiBot {
    * Assigns event handlers to Discord Client events
    */
   addEventHandlers() {
-    this.client.on("ready", this.onReady).on("message", this.onMessage);
+    this.client.on("ready", this.onReady).on("message", this.onMessage).on("channelUpdate", this.onChannelUpdate).on("voiceStateUpdate", this.onVoiceStateUpdate);
   }
 
   logIn() {
@@ -33,6 +34,11 @@ class BoiBot {
 
   onReady() {
     this.ready = true;
+    if(this.client.user != null){
+      this.client.user.setActivity('Message !h for help!', {type: 'WATCHING'})
+      .then(presence => console.log(`Activity set to ${presence.game ? presence.game.name : 'none'}`))
+      .catch(console.error);
+    }
   }
 
   /**
@@ -66,23 +72,60 @@ class BoiBot {
 
     this.setUserCommand(message.content);
     this.setUserArguments(message.content);
-
     switch (this.userCommand) {
       case "n":
       case "nickname":
         nickName.change(message, this.userArguments);
+        message.delete()
         break;
-      default:
-        if (this.userCommand !== "help") {
-          this.messageToUser = `I'm a huge dipshit and can't understand that command :'(\n`;
-          message.channel.send(this.messageToUser).catch(console.error);
-        }
+      case "s":  
+      case "say":
+        say.sendMessage(message,this.userArguments);
+        message.delete();
+        break;
+      case "8ball":
+        eightball.divine(message,this.userArguments);
+        break;
+      case "h":
+      case "help":
         help.get(
           message,
-          [help.properties, nickName.properties],
+          [help.properties, nickName.properties,say.properties,eightball.properties],
           this.userArguments
         );
+        message.delete()
         break;
+    }
+  }
+
+  /**
+   * Handles users entering voice channels and messages main chat channel.
+   *
+   * @param {Object} oldMember User object before entering new voice channel
+   * @param {Object} newMember User object after entering new voice channel
+   */
+  onVoiceStateUpdate(oldMember, newMember) {
+    //417075362686828556
+    //417075362686828556
+    if(newMember.voiceChannel == null){
+      console.log("out")
+    }
+    else if (newMember.voiceChannel != oldMember.voiceChannel) {
+      if(newMember.nickname == null){
+        newMember.guild.channels.get('417075362686828556').send(`${newMember.displayName} joined ${newMember.voiceChannel.name}`)
+      }
+      else{
+        newMember.guild.channels.get('417075362686828556').send(`${newMember.nickname} joined ${newMember.voiceChannel.name}`)
+      }
+    }
+  }
+
+  onChannelUpdate(oldMember,newMember){
+    if(oldMember.name != newMember.name){
+      newMember.send(`Channel **${oldMember.name}**'s name has been changed to **${newMember.name}**.`)
+    }
+    if(oldMember.topic != newMember.topic){
+      newMember.send(`This channel has a new topic: \n**${newMember.topic}**`)
     }
   }
 }
