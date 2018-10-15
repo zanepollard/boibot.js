@@ -33,9 +33,11 @@ class BoiBot {
 
   onReady() {
     this.ready = true;
-    this.client.user.setActivity('Message !h for help!', {type: 'WATCHING'})
+    if(this.client.user != null){
+      this.client.user.setActivity('Message !h for help!', {type: 'WATCHING'})
       .then(presence => console.log(`Activity set to ${presence.game ? presence.game.name : 'none'}`))
       .catch(console.error);
+    }
   }
 
   /**
