@@ -5,6 +5,8 @@ const help = require("./commands/help");
 const nickName = require("./commands/nick-name");
 const say = require("./commands/say")
 const eightball = require("./commands/eightball")
+const chan = require("./commands/channel-name")
+const topic = require("./commands/channel-topic")
 
 class BoiBot {
   constructor() {
@@ -76,7 +78,7 @@ class BoiBot {
       case "n":
       case "nickname":
         nickName.change(message, this.userArguments);
-        message.delete()
+        message.delete();
         break;
       case "s":  
       case "say":
@@ -86,14 +88,24 @@ class BoiBot {
       case "8ball":
         eightball.divine(message,this.userArguments);
         break;
+      case "ch":
+      case "channelname":
+        chan.changeName(message,this.userArguments);
+        message.delete();
+        break;
+      case "tp":
+      case "topic":
+        topic.changeTopic(message,this.userArguments)
+        message.delete();
+        break;
       case "h":
       case "help":
         help.get(
           message,
-          [help.properties, nickName.properties,say.properties,eightball.properties],
+          [help.properties, nickName.properties,say.properties,eightball.properties,chan.properties,topic.properties],
           this.userArguments
         );
-        message.delete()
+        message.delete();
         break;
     }
   }
