@@ -4,6 +4,7 @@ const { prefix, token } = require("./config.json");
 const help = require("./commands/help");
 const nickName = require("./commands/nick-name");
 const say = require("./commands/say")
+const eightball = require("./commands/eightball")
 
 class BoiBot {
   constructor() {
@@ -82,13 +83,17 @@ class BoiBot {
         say.sendMessage(message,this.userArguments);
         message.delete();
         break;
+      case "8ball":
+        eightball.divine(message,this.userArguments);
+        break;
       case "h":
       case "help":
         help.get(
           message,
-          [help.properties, nickName.properties],
+          [help.properties, nickName.properties,say.properties,eightball.properties],
           this.userArguments
         );
+        message.delete()
         break;
     }
   }
@@ -117,10 +122,10 @@ class BoiBot {
 
   onChannelUpdate(oldMember,newMember){
     if(oldMember.name != newMember.name){
-      newMember.send(`Channel **${oldMember.name}** changed to **${newMember.name}**.`)
+      newMember.send(`Channel **${oldMember.name}**'s name has been changed to **${newMember.name}**.`)
     }
     if(oldMember.topic != newMember.topic){
-      newMember.send(`This channel has a new topic: \n${newMember.topic}`)
+      newMember.send(`This channel has a new topic: \n**${newMember.topic}**`)
     }
   }
 }

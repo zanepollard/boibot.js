@@ -2,7 +2,7 @@ const sayProperties = {
     usage: "<Message for Bot to say>",
     args: true,
     aliases: ["s", "say"],
-    name: "Say",
+    name: "say",
     description: "Makes the bot say what you enter"
   };
   
