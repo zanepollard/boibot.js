@@ -16,6 +16,8 @@ const eightballProperties = {
     if (theQuestion.length > 0) {
       item = Math.floor((Math.random() * answers.length));
       message.channel.send(`The Magic 8 Ball says:\n***${answers[item]}***`);
+    }else{
+      message.reply(" Please ask a question!\nUsage: !8ball <Question Here>")
     }
   };
   
