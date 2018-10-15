@@ -32,14 +32,5 @@ describe("BoiBot", function() {
       boiBot.setUserArguments(dummyMessage.content);
       assert.deepEqual(boiBot.userArguments, ["someUser", "New", "Nickname"]);
     });
-
-    it("sends the user a message when it doesn't understand a command", function() {
-      dummyMessage.content = "!poop someUser New Nickname";
-      boiBot.onMessage(dummyMessage);
-      assert.deepEqual(
-        boiBot.messageToUser,
-        `I'm a huge dipshit and can't understand that command :'(\n`
-      );
-    });
   });
 });
