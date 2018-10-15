@@ -91,6 +91,12 @@ class BoiBot {
     }
   }
 
+  /**
+   * Handles users entering voice channels and messages main chat channel.
+   *
+   * @param {Object} oldMember User object before entering new voice channel
+   * @param {Object} newMember User object after entering new voice channel
+   */
   onVoiceStateUpdate(oldMember, newMember) {
     //417075362686828556
     if(newMember.voiceChannel == null){
