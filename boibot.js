@@ -117,17 +117,29 @@ class BoiBot {
    * @param {Object} newMember User object after entering new voice channel
    */
   onVoiceStateUpdate(oldMember, newMember) {
+    let channelID;
+    let channels = newMember.guild.channels;
+    channelLoop:
+    for (let c of channels) {
+        let channelType = c[1].type;
+        if (channelType === "text") {
+            channelID = c[0];
+            break channelLoop;
+        }
+    }
+
     //417075362686828556
     //417075362686828556
+    console.log(newMember.guild.id)
     if(newMember.voiceChannel == null){
       console.log("out")
     }
     else if (newMember.voiceChannel != oldMember.voiceChannel) {
       if(newMember.nickname == null){
-        newMember.guild.channels.get('417075362686828556').send(`${newMember.displayName} joined ${newMember.voiceChannel.name}`)
+        newMember.guild.channels.get(channelID).send(`${newMember.displayName} joined ${newMember.voiceChannel.name}`)
       }
       else{
-        newMember.guild.channels.get('417075362686828556').send(`${newMember.nickname} joined ${newMember.voiceChannel.name}`)
+        newMember.guild.channels.get(channelID).send(`${newMember.nickname} joined ${newMember.voiceChannel.name}`)
       }
     }
   }
